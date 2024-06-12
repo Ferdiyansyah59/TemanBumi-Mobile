@@ -1,20 +1,27 @@
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import MainStackScreen from './screenNavigation/stack/index';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Jakarta-Regular': require('./assets/font/jakarta/static/PlusJakartaSans-Regular.ttf'),
+    'Jakarta-Medium': require('./assets/font/jakarta/static/PlusJakartaSans-Medium.ttf'),
+    'Jakarta-SemiBold': require('./assets/font/jakarta/static/PlusJakartaSans-SemiBold.ttf'),
+    'Jakarta-Bold': require('./assets/font/jakarta/static/PlusJakartaSans-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style='dark' />
+      <NavigationContainer>
+        <MainStackScreen />
+      </NavigationContainer>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
