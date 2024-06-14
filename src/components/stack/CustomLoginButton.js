@@ -1,8 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '../../src/static/Colors';
-import TEXT from '../../src/static/Text';
+import Colors from '../../static/Colors';
+import TEXT from '../../static/Text';
+import { useNavigation } from '@react-navigation/native';
 
 function CustomLoginButton() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity>
@@ -10,7 +12,10 @@ function CustomLoginButton() {
           <Text style={styles.masukTxt}>Masuk</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Register')}
+        activeOpacity={0.85}
+      >
         <View
           style={{
             paddingRight: 7,

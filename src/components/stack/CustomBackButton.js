@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import Colors from '../../src/static/Colors';
+import Colors from '../../static/Colors';
 const CustomBackButton = () => {
   const navigation = useNavigation();
 
