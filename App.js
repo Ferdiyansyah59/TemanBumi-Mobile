@@ -45,7 +45,34 @@ function Root() {
   return <Navigation />;
 }
 
+// function Root() {
+//   const [isTryingLogin, setIsTryingLogin] = useState(true);
+//   const authCtx = useContext(AuthContext);
+
+//   useEffect(() => {
+//     async function fetchToken() {
+//       const storedToken = await AsyncStorage.getItem('token');
+//       if (storedToken) {
+//         authCtx.authenticate(storedToken);
+//         setIsTryingLogin(false); // Set this state to false after token is fetched
+//       }
+//     }
+//     fetchToken();
+//   }, []);
+
+//   if (isTryingLogin) {
+//     return <AppLoading />;
+//   }
+
+//   return <Navigation />;
+// }
+
 export default function App() {
+  // useEffect(() => {
+  //   AsyncStorage.removeItem('token');
+  //   AsyncStorage.removeItem('data');
+  // });
+
   const [fontsLoaded] = useFonts({
     'Jakarta-Regular': require('./assets/font/jakarta/static/PlusJakartaSans-Regular.ttf'),
     'Jakarta-Medium': require('./assets/font/jakarta/static/PlusJakartaSans-Medium.ttf'),

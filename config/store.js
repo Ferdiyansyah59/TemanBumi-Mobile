@@ -13,12 +13,16 @@ function AuthContextProvider({ children }) {
 
   function authenticate(token, data) {
     setAuthToken(token);
-    AsyncStorage.setItem('token', token);
-    AsyncStorage.setItem('data', JSON.stringify(data));
+    try {
+      AsyncStorage.setItem('token', token);
+      AsyncStorage.setItem('data', JSON.stringify(data));
+    } catch (error) {
+      console.error('Error storing token in AsyncStorage:', error);
+    }
   }
 
-  function logout(m) {
-    setAuthToken(m);
+  function logout() {
+    setAuthToken(null);
     AsyncStorage.removeItem('token');
     AsyncStorage.removeItem('data');
   }

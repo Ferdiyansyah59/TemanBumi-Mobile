@@ -7,12 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ScreenDimensions from '../../static/dimensions';
 import Colors from '../../static/Colors';
 import TEXT from '../../static/Text';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { API_URL } from '../../../config/apiConfig';
 import axios from 'axios';
 import { errorDialog, successDialog } from '../../components/dialog/response';
@@ -20,7 +19,6 @@ import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { useNavigation } from '@react-navigation/native';
 
 const WIDTH = ScreenDimensions.width;
-const HEIGHT = ScreenDimensions.height;
 
 const Register = () => {
   const nav = useNavigation();
@@ -63,7 +61,12 @@ const Register = () => {
           ) {
             erM = 'Minimal Password 8 Karakter';
             errorDialog(erM);
-          } else {
+          } else if (
+            msg ==
+            `Key: 'RegisterDTO.Email' Error:Field validation for 'Email' failed on the 'email' tag`
+          ) {
+            erM = 'Format Email Tidak Sesuai';
+            errorDialog(erM);
           }
         });
     } catch (err) {

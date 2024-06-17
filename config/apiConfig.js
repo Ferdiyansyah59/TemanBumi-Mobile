@@ -1,5 +1,6 @@
-const CLASSIFICATION_URL =
-  'https://sampah-lagi-done-please-3lqrspa3va-et.a.run.app';
-const API_URL = 'https://sampah-go-3lqrspa3va-et.a.run.app/api';
+const CLASSIFICATION_URL = '';
+const API_URL = '';
+const CARBONS_API = '';
+const ARTICLE_IMAGE = '';
 
-export { CLASSIFICATION_URL, API_URL };
+export { CLASSIFICATION_URL, API_URL, CARBONS_API, ARTICLE_IMAGE };

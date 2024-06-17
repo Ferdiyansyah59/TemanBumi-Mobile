@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ScreenDimensions from '../../static/dimensions';
 import Colors from '../../static/Colors';
 import TEXT from '../../static/Text';
@@ -16,11 +15,11 @@ import { useNavigation } from '@react-navigation/native';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { API_URL } from '../../../config/apiConfig';
 import axios from 'axios';
-import { errorDialog, successDialog } from '../../components/dialog/response';
-import { ALERT_TYPE, Dialog, Toast } from 'react-native-alert-notification';
+import { errorDialog } from '../../components/dialog/response';
 import { AuthContext } from '../../../config/store';
+import LoadingOverlay from '../../components/auth/LoadingOverlay';
+
 const WIDTH = ScreenDimensions.width;
-const HEIGHT = ScreenDimensions.height;
 const Login = () => {
   const nav = useNavigation();
   // Data
@@ -31,6 +30,8 @@ const Login = () => {
   const [emailVal, setEmailVal] = useState(false);
   const [passwordVal, setPasswordVal] = useState(false);
 
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
   const authCtx = useContext(AuthContext);
 
   const data = {
@@ -39,24 +40,24 @@ const Login = () => {
   };
 
   const Login = () => {
-    // console.log(data);
     try {
       axios
         .post(`${API_URL}/login`, data)
         .then((res) => {
-          const token = res.data.data.token;
+          setIsAuthenticating(true);
+          const id = res.data.data.id;
           const email = res.data.data.email;
           const name = res.data.data.name;
           const data = {
+            id: id,
             email: email,
             name: name,
           };
+          const token = res.data.data.token;
           authCtx.authenticate(token, data);
         })
         .catch((err) => {
           let msg = err.response;
-          // m = JSON.parse(msg);
-          console.log(msg.data.message);
           let erM = null;
           if (
             msg.data ==
@@ -67,8 +68,11 @@ const Login = () => {
           } else if (msg.data.message == 'Please check again yout credential') {
             erM = 'Email atau Password Salah!';
             errorDialog(erM);
-          } else {
+          } else if (msg.data.message == undefined) {
+            erM = 'Password minimal 8 karakter!';
+            errorDialog(erM);
           }
+          setIsAuthenticating(false);
         });
     } catch (err) {
       console.log('Apa nich ', err);
@@ -84,10 +88,14 @@ const Login = () => {
     }
   };
 
-  const handleRegister = () => {
+  const handleLogin = () => {
     formValidation();
     Login();
   };
+
+  if (isAuthenticating) {
+    return <LoadingOverlay message='Logging you in...' />;
+  }
 
   return (
     <AlertNotificationRoot>
@@ -142,7 +150,7 @@ const Login = () => {
                   marginLeft: 15,
                 }}
               >
-                Nama tidak boleh kosong!
+                Email tidak boleh kosong!
               </Text>
             ) : (
               ''
@@ -186,7 +194,7 @@ const Login = () => {
                   marginLeft: 15,
                 }}
               >
-                Nama tidak boleh kosong!
+                Password tidak boleh kosong!
               </Text>
             ) : (
               ''
@@ -194,7 +202,7 @@ const Login = () => {
             {/* Button */}
             <TouchableOpacity
               activeOpacity={0.85}
-              onPress={handleRegister}
+              onPress={handleLogin}
             >
               <View style={styles.btn}>
                 <Text style={styles.btnTxt}>Masuk</Text>
