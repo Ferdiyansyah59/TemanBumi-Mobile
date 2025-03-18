@@ -16,7 +16,7 @@ import ClassificationOutput from '../../../components/classification/output';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../../../config/firebase';
-import { CLASSIFICATION_URL } from '../../../../config/apiConfig';
+import { AI_API } from '../../../../config/apiConfig';
 
 const Classification = () => {
   const navigation = useNavigation();
@@ -29,7 +29,7 @@ const Classification = () => {
   const predict = async (url) => {
     await axios
       .post(
-        `${CLASSIFICATION_URL}`,
+        `${AI_API}/sampah`,
         { img: url },
         {
           headers: {
@@ -183,6 +183,6 @@ const styles = StyleSheet.create({
   previewTitle: {
     color: Colors.gray300,
     fontSize: 12,
-    fontFamily: 'PoppinsMedium',
+    fontFamily: 'Jakarta-Medium',
   },
 });

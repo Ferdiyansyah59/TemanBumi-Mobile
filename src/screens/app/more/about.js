@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   },
   img: {
     alignSelf: 'center',
-    width: WIDTH * 0.8,
-    height: WIDTH * 0.7,
+    width: WIDTH < 400 ? WIDTH * 0.6 : WIDTH < 600 ? WIDTH * 0.8 : WIDTH * 0.5,
+    height: WIDTH < 400 ? WIDTH * 0.5 : WIDTH < 600 ? WIDTH * 0.7 : WIDTH * 0.4,
     resizeMode: 'contain',
   },
   title: {

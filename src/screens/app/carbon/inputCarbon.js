@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
-import { API_URL, CARBONS_API } from '../../../../config/apiConfig';
+import { API_URL, AI_API } from '../../../../config/apiConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { successDialog } from '../../../components/dialog/response';
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +24,8 @@ const InputCarbon = ({ route }) => {
   const [organic, setOrganic] = useState(0.0);
   const [inorg, setInorg] = useState(0.0);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [carbonFootprint, setCarbonFootprint] = useState(null);
 
   const dataPredict = {
@@ -38,7 +40,7 @@ const InputCarbon = ({ route }) => {
 
   const predict = async () => {
     axios
-      .post(`${CARBONS_API}`, dataPredict, {
+      .post(`${AI_API}/carbons`, dataPredict, {
         headers: {
           Accept: 'application/json, text/plain',
           'Content-Type': 'multipart/form-data',
@@ -54,6 +56,7 @@ const InputCarbon = ({ route }) => {
   };
 
   const insertData = async (carbonFootprint) => {
+    setIsLoading(true);
     const token = await AsyncStorage.getItem('token');
     const data = await AsyncStorage.getItem('data');
     const userId = JSON.parse(data);
@@ -80,8 +83,11 @@ const InputCarbon = ({ route }) => {
         },
       )
       .then((res) => {
+        setIsLoading(false);
         successDialog(
-          `Berhasil menyimpan data dan jejak karbonmu hari ini adalah ${carbonFootprint} Kg CO2e`,
+          `Hari ini, jejak karbonmu adalah ${carbonFootprint} Kg CO2e.  ${
+            carbonFootprint > 20 ? 'Melebihi batas normal!' : 'Masih aman, kok!'
+          }`,
           () => {
             onGoBack();
             nav.goBack();
@@ -157,7 +163,9 @@ const InputCarbon = ({ route }) => {
           style={styles.btn}
           onPress={handleSave}
         >
-          <Text style={styles.btnTxt}>Simpan</Text>
+          <Text style={styles.btnTxt}>
+            {isLoading ? 'Loading...' : 'Simpan'}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </AlertNotificationRoot>

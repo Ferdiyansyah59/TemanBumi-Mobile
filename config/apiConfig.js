@@ -1,6 +1,6 @@
-const CLASSIFICATION_URL = '';
-const API_URL = '';
-const CARBONS_API = '';
-const ARTICLE_IMAGE = '';
+// const AI_API =
+const AI_API = 'http://82.112.230.106:5001';
+const API_URL = 'http://82.112.230.106:8018/api';
+const ARTICLE_IMAGE = 'http://82.112.230.106:8859/storage/public/';
 
-export { CLASSIFICATION_URL, API_URL, CARBONS_API, ARTICLE_IMAGE };
+export { AI_API, API_URL, ARTICLE_IMAGE };

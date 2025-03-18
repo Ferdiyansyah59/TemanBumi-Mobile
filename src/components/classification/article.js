@@ -9,32 +9,37 @@ import { API_URL } from '../../../config/apiConfig';
 
 const ClassificationArticles = ({ className }) => {
   const [data, setData] = useState([]);
-  const [title, setTitle] = useState([]);
+  const [title, setTitle] = useState('');
 
-  const setTitleName = () => {
-    className === 'battery'
-      ? setTitle('Baterai')
-      : className === 'cardboard'
-      ? setTitle('Kardus')
-      : className === 'clothes'
-      ? setTitle('Pakaian')
-      : className === 'glass'
-      ? setTitle('Beling')
-      : className === 'human'
-      ? setTitle('Ini Teman Anda Bukan Sampah Weeeee!')
-      : className === 'metal'
-      ? setTitle('Logam')
-      : className === 'organic'
-      ? setTitle('Organik')
-      : className === 'paper'
-      ? setTitle('Kertas')
-      : className === 'plastic'
-      ? setTitle('Plastik')
-      : className === 'shoes'
-      ? setTitle('Sepatu')
-      : className === 'styrofoam'
-      ? setTitle('Styrofoam')
-      : '';
+  const [titleSet, setTitleSet] = useState(false);
+  const setTitleName = (callback) => {
+    if (className === 'battery') {
+      setTitle('Baterai', callback);
+    } else if (className === 'cardboard') {
+      setTitle('Kardus', callback);
+    } else if (className === 'clothes') {
+      setTitle('Pakaian', callback);
+    } else if (className === 'glass') {
+      setTitle('Beling', callback);
+    } else if (className === 'human') {
+      setTitle('Ini Teman Anda Bukan Sampah Weeeee!', callback);
+    } else if (className === 'metal') {
+      setTitle('Logam', callback);
+    } else if (className === 'organic') {
+      setTitle('Organik', callback);
+    } else if (className === 'paper') {
+      setTitle('Kertas', callback);
+    } else if (className === 'plastic') {
+      setTitle('Plastik', callback);
+    } else if (className === 'shoes') {
+      setTitle('Sepatu', callback);
+    } else if (className === 'styrofoam') {
+      setTitle('Styrofoam', callback);
+    } else {
+      setTitle('');
+    }
+
+    setTitleSet(true);
   };
 
   const get = async () => {
@@ -53,9 +58,15 @@ const ClassificationArticles = ({ className }) => {
       });
   };
   useEffect(() => {
+    setTitleSet(false); // Reset titleSet when className changes
     setTitleName();
-    get();
-  }, []);
+  }, [className]);
+
+  useEffect(() => {
+    if (titleSet) {
+      get();
+    }
+  }, [titleSet, title]);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

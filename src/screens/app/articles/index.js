@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, View, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ArticleList from '../../../components/list/articles';
 import { API_URL } from '../../../../config/apiConfig';
@@ -11,6 +11,7 @@ import Colors from '../../../static/Colors';
 const ArticleScreen = () => {
   const [data, setData] = useState([]);
   const [title, setTitle] = useState('');
+  const [refreshing, setRefreshing] = useState();
 
   const textChange = (e) => {
     setTitle(e);
@@ -52,19 +53,38 @@ const ArticleScreen = () => {
       });
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
   useEffect(() => {
     handleSearch();
-  }, []);
+    if (refreshing) {
+      handleSearch();
+    }
+  }, [refreshing]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header
-        handleSearch={handleSearch}
-        textChange={textChange}
-      />
-      <View style={{ paddingHorizontal: 20 }}>
-        <ArticleList data={data} />
-      </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+        <Header
+          handleSearch={handleSearch}
+          textChange={textChange}
+        />
+        <View style={{ paddingHorizontal: 20 }}>
+          <ArticleList data={data} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -75,6 +95,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white,
-    paddingBottom: 120,
+    // paddingBottom: 120,
   },
 });

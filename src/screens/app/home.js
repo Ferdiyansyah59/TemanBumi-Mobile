@@ -1,35 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import {
-  Button,
-  Text,
-  Alert,
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import { API_URL } from '../../../config/apiConfig';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../../../config/store';
-import ArticleCard from '../../components/list/card/articles';
-import ArticleList from '../../components/list/articles';
 import Colors from '../../static/Colors';
 import { StatusBar } from 'expo-status-bar';
-import TEXT from '../../static/Text';
 import ScreenDimensions from '../../static/dimensions';
 import Header from '../../components/home/header';
 import Middle from '../../components/home/middle';
 import LatestArticle from '../../components/home/latestArticles';
-import { NativeModules } from 'react-native';
 const WIDTH = ScreenDimensions.width;
 const Home = () => {
   const authCtx = useContext(AuthContext);
-  const [token, setToken] = useState();
-  const [data, setData] = useState([]);
   const [name, setName] = useState();
+
+  const [refreshing, setRefreshing] = useState();
 
   const getDataStorage = async () => {
     const data = await AsyncStorage.getItem('data');
@@ -44,6 +29,13 @@ const Home = () => {
     authCtx.logout();
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       {/* <Button
@@ -56,12 +48,22 @@ const Home = () => {
       />
       {/* Header */}
       <Header name={name} />
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
         {/* Middle */}
         <Middle />
 
         {/* Article */}
-        <LatestArticle />
+        <LatestArticle
+          onReload={() => onRefresh()}
+          isRefreshing={refreshing}
+        />
         <View style={{ height: 20 }}></View>
       </ScrollView>
     </SafeAreaView>

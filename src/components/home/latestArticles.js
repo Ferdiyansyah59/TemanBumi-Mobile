@@ -7,7 +7,7 @@ import { API_URL } from '../../../config/apiConfig';
 import ArticleList from '../list/articles';
 import axios from 'axios';
 
-const LatestArticle = () => {
+const LatestArticle = ({ onReload, isRefreshing }) => {
   const [data, setData] = useState([]);
 
   const get = async () => {
@@ -29,7 +29,11 @@ const LatestArticle = () => {
   };
   useEffect(() => {
     get();
-  }, []);
+
+    if (isRefreshing) {
+      get();
+    }
+  }, [isRefreshing]);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

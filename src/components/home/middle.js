@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   emissionCard: {
     backgroundColor: '#D0EAD3',
-    flex: 0.3,
+    flex: WIDTH < 400 ? 0.4 : WIDTH < 600 ? 0.3 : 0.2,
     paddingVertical: 15,
     paddingHorizontal: 5,
     borderRadius: 15,
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     paddingVertical: 8,
     marginTop: 10,
+    paddingHorizontal: 5,
   },
   txtBtnCarbon: {
     fontFamily: 'Jakarta-Medium',

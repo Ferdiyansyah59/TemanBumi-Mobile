@@ -257,8 +257,8 @@ const styles = StyleSheet.create({
     zIndex: 1, // works on ios
     elevation: 1, // works on android
     resizeMode: 'contain',
-    width: WIDTH < 400 ? 150 : WIDTH < 600 ? 370 : 450,
-    height: WIDTH < 400 ? 150 : WIDTH < 600 ? 370 : 450,
+    width: WIDTH < 400 ? 300 : WIDTH < 600 ? 370 : 450,
+    height: WIDTH < 400 ? 300 : WIDTH < 600 ? 370 : 450,
     alignSelf: 'center',
     marginBottom: -70,
   },
@@ -310,15 +310,16 @@ const styles = StyleSheet.create({
   btnTxt: {
     color: Colors.white,
     fontFamily: 'Jakarta-SemiBold',
+    fontSize: TEXT.sm,
   },
   gimikAtas: {
     position: 'absolute',
     top: -5,
     right: -5,
-    marginTop: WIDTH < 400 ? -100 : WIDTH < 600 ? -200 : -150,
+    marginTop: WIDTH < 400 ? -160 : WIDTH < 600 ? -200 : -150,
     marginRight: WIDTH < 400 ? -150 : WIDTH < 600 ? -150 : -150,
-    width: WIDTH < 400 ? 150 : WIDTH < 600 ? 500 : 450,
-    height: WIDTH < 400 ? 150 : WIDTH < 600 ? 500 : 450,
+    width: WIDTH < 400 ? 450 : WIDTH < 600 ? 500 : 450,
+    height: WIDTH < 400 ? 450 : WIDTH < 600 ? 500 : 450,
     resizeMode: 'contain',
     zIndex: 0, // works on ios
     elevation: 0, // works on android
@@ -328,9 +329,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     alignSelf: 'center',
-    marginBottom: WIDTH < 400 ? -100 : WIDTH < 600 ? -250 : -150,
-    width: WIDTH < 400 ? 150 : WIDTH < 600 ? 700 : 450,
-    height: WIDTH < 400 ? 150 : WIDTH < 600 ? 700 : 450,
+    marginBottom: WIDTH < 400 ? -160 : WIDTH < 600 ? -250 : -150,
+    width: WIDTH < 400 ? 450 : WIDTH < 600 ? 700 : 450,
+    height: WIDTH < 400 ? 450 : WIDTH < 600 ? 700 : 450,
     zIndex: 0, // works on ios
     elevation: 0, // works on android
   },

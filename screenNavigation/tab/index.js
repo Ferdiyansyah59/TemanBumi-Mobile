@@ -74,7 +74,7 @@ const MainTabNavigation = () => {
             paddingBottom: 10,
           },
           tabBarLabelStyle: {
-            fontFamily: 'PoppinsMedium',
+            fontFamily: 'Jakarta-Medium',
           },
           tabBarHideOnKeyboard: true,
         })}

@@ -13,7 +13,6 @@ import TEXT from '../static/Text';
 import { useNavigation } from '@react-navigation/native';
 
 const WIDTH = ScreenDimensions.width;
-const HEIGHT = ScreenDimensions.height;
 function Index() {
   const navigation = useNavigation();
   return (
@@ -94,8 +93,8 @@ const styles = StyleSheet.create({
     // paddingLeft: 20,
   },
   img: {
-    width: WIDTH < 400 ? 150 : WIDTH < 600 ? 350 : 450,
-    height: WIDTH < 400 ? 150 : WIDTH < 600 ? 350 : 450,
+    width: WIDTH < 400 ? 250 : WIDTH < 600 ? 350 : 400,
+    height: WIDTH < 400 ? 250 : WIDTH < 600 ? 350 : 400,
     resizeMode: 'contain',
   },
   btn: {
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
   btnTxt: {
     color: Colors.white,
     fontFamily: 'Jakarta-SemiBold',
+    fontSize: TEXT.sm,
   },
   btnContainer: {
     flex: 0.1,

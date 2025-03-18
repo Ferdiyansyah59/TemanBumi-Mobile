@@ -3,8 +3,15 @@ import Colors from '../../static/Colors';
 import TEXT from '../../static/Text';
 import ClassOutput from './micro/classOutput';
 import ClassificationArticles from './article';
+import { useEffect, useState } from 'react';
 
 const ClassificationOutput = ({ className }) => {
+  const [showArticles, setShowArticles] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setShowArticles(true);
+    }, 1500);
+  });
   return (
     <View style={styles.container}>
       {className != null ? (
@@ -38,7 +45,7 @@ const ClassificationOutput = ({ className }) => {
             </Text>
           </View>
           <ClassOutput predict={className} />
-          <ClassificationArticles className={className} />
+          {showArticles && <ClassificationArticles className={className} />}
         </View>
       ) : (
         ''

@@ -18,7 +18,7 @@ const errorToast = (msg) => {
   });
 };
 
-const successDialog = (msg, onPressButton) => {
+const successDialog = (msg, onPressButton, header) => {
   Dialog.show({
     type: ALERT_TYPE.SUCCESS,
     title: 'Success!',
